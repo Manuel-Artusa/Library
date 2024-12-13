@@ -22,11 +22,37 @@ namespace Library1.Controllers
             var generos = await _generoRepository.GetAllAsync();
             return Ok(generos);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetGeneroById(int id)
+        {
+            return Ok(await _generoRepository.getGeneroById(id));
+        }
         [HttpPost]
         public async Task<IActionResult> PostGenero([FromBody] Genero generoDto)
         {
             var genero = await _generoRepository.CreateAsync(generoDto);
             return Ok(genero);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> putGenero(int id, [FromBody]Genero genero) {
+            if(genero == null || genero.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var existingGenero = await _generoRepository.getGeneroById(id);
+            if (existingGenero == null)
+            {
+                return NotFound();
+            }
+
+
+            existingGenero.Nombre = genero.Nombre;
+            
+
+            await _generoRepository.UpdateAsync(existingGenero);
+            return Ok(existingGenero);
+            
         }
     }
 }

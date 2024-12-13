@@ -23,10 +23,17 @@ namespace libraryejercicio.Repositories.Implements
             return _context.Generos.ToListAsync();
         }
 
-        public async void UpdateAsync(Genero genero)
+        public async Task<Genero> UpdateAsync(Genero genero)
         {
             _context.Generos.Update(genero);
-            await _context.SaveChangesAsync();
+           
+            await  _context.SaveChangesAsync();
+            return genero;
+        }
+        public async Task<Genero> getGeneroById(int id) {
+
+            return await _context.Generos.FindAsync(id);
+
         }
     }
 }

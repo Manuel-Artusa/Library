@@ -89,6 +89,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Library1.Controllers.GeneroController",
+    "Method": "GetGeneroById",
+    "RelativePath": "api/Genero/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Library1.Controllers.GeneroController",
+    "Method": "putGenero",
+    "RelativePath": "api/Genero/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "genero",
+        "Type": "libraryejercicio.Models.Genero",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Library1.Controllers.LibroController",
     "Method": "GetLibros",
     "RelativePath": "api/Libro",

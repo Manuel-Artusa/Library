@@ -5,8 +5,8 @@ namespace libraryejercicio.Repositories
     public interface IGeneroRepository
     {
         Task<List<Genero>> GetAllAsync();
-
+        Task<Genero> getGeneroById(int id);
         Task<Genero> CreateAsync(Genero genero);
-        void UpdateAsync(Genero genero);
+        Task<Genero> UpdateAsync(Genero genero);
     }
 }
