@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace libraryejercicio.Repositories.Implements
 {
-    public class LibroRepository: ILibroRepository
+    public class LibroRepository : ILibroRepository
     {
         private readonly libraryContext _context;
         public LibroRepository(libraryContext context)
@@ -18,15 +18,25 @@ namespace libraryejercicio.Repositories.Implements
             return libro;
         }
 
-        public Task<List<Libro>> GetAllAsync()
+        public async Task<List<Libro>> GetAllAsync()
         {
-            return _context.Libros.ToListAsync();
+            return await _context.Libros
+            .Include(l => l.Autor) 
+            .Include(l => l.Genero)
+            .ToListAsync();
         }
 
-        public void UpdateAsync(Libro libro)
+        public async Task<Libro?> GetByIdAsync(int id)
         {
+            return await _context.Libros.FindAsync(id);
+        }
+        public async Task<Libro> UpdateAsync(Libro libro)
+        { 
             _context.Libros.Update(libro);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            return libro;
+
         }
     }
 }

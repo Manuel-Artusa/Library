@@ -9,9 +9,9 @@ namespace libraryejercicio.Models
         public string Titulo { get; set; }
 
         public int AutorId { get; set; }
-        public Autor Autor { get; set; }
+        public Autor? Autor { get; set; }
         public DateTime Fec_Publi { get; set; }
         public int GeneroId { get; set; }
-        public Genero Genero { get; set; }
+        public Genero? Genero { get; set; }
     }
 }

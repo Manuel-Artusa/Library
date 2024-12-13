@@ -152,6 +152,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Library1.Controllers.LibroController",
+    "Method": "PutLibro",
+    "RelativePath": "api/Libro/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "libro",
+        "Type": "libraryejercicio.Models.Libro",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Library1.Controllers.LibroController",
+    "Method": "getLibroById",
+    "RelativePath": "api/Libro/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "libraryejercicio.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

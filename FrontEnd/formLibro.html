@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crear Libro
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+        <div class="">
+            <button onclick="window.location.href='listGenero.html'">Listado Genero</button>
+            <button onclick="window.location.href='list.html'">Listado Autores</button>
+            <button onclick="window.location.href='listLibro.html'">List Libro</button>
+            <button onclick="window.location.href='formautor.html'">Form Autor</button>
+            <button onclick="window.location.href='formGenero.html'">Form Genero</button>
+            <button onclick="window.location.href='formLibro.html'">Form Libro</button>
+        </div>
+    </div>
+    <div class="container mt-5">
+      <h1>Crear Libro</h1>
+      <form id="LibroForm">
+        <!-- <div class="mb-3">
+          <label for="isbn" class="form-label">ISBN</label>
+          <input type="number" class="form-control" id="isbn" required />
+        </div> -->
+
+        <div class="mb-3">
+          <label for="titulo" class="form-label">Título</label>
+          <input type="text" class="form-control" id="titulo" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="fec_publi" class="form-label">Fecha de Publicación</label>
+          <input type="date" class="form-control" id="fec_publi" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="autor" class="form-label">Autor</label>
+          <select class="form-select" id="autor" required>
+            <option value="" disabled selected>Seleccionar Autor</option>
+            <!-- Opciones dinámicas aquí -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="genero" class="form-label">Género</label>
+          <select class="form-select" id="genero" required>
+            <option value="" disabled selected>Seleccionar Género</option>
+            <!-- Opciones dinámicas aquí -->
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+      <div id="mensaje" class="mt-3"></div>
+    </div>
+
+    <script>
+      const urlApi = "https://localhost:7129/api";
+
+      async function cargarOpciones() {
+        try {
+          const [autoresRes, generosRes] = await Promise.all([
+            fetch(`${urlApi}/Autor`),
+            fetch(`${urlApi}/Genero`)
+          ]);
+
+          if (!autoresRes.ok || !generosRes.ok) {
+            throw new Error("Error al cargar autores o géneros");
+          }
+
+          const autores = await autoresRes.json();
+          const generos = await generosRes.json();
+
+          const autorSelect = document.getElementById("autor");
+          autores.forEach(autor => {
+            const option = document.createElement("option");
+            option.value = autor.id;
+            option.textContent = autor.nombre;
+            autorSelect.appendChild(option);
+          });
+
+          const generoSelect = document.getElementById("genero");
+          generos.forEach(genero => {
+            const option = document.createElement("option");
+            option.value = genero.id;
+            option.textContent = genero.nombre;
+            generoSelect.appendChild(option);
+          });
+        } catch (error) {
+          console.error(error);
+          document.getElementById("mensaje").innerHTML = `
+            <div class="alert alert-danger">No se pudieron cargar las opciones. Intente nuevamente.</div>
+          `;
+        }
+      }
+
+// Detectar si es edición o creación
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// Si hay un ID, estamos en modo edición
+if (id) {
+    document.querySelector("h1").textContent = "Editar Libro";
+    cargarLibro(id);
+}
+
+document.getElementById("LibroForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    
+    //const isbn = document.getElementById("isbn").value
+    const titulo =     document.getElementById("titulo").value;
+    const autorId =     document.getElementById("autor").value;
+    const fec_publi =     document.getElementById("fec_publi").value ;
+    const generoId =     document.getElementById("genero").value;
+    
+
+    const libro = {
+        //isbn: Number(isbn),
+        titulo: titulo,
+        autorId: Number(autorId),
+        fec_Publi: new Date(fec_publi).toISOString(),
+        generoId: Number(generoId)
+    };
+
+    try {
+        let response;
+        if (id) {
+            // Editar Libro
+            response = await fetch(`${urlApi}/Libro/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(libro),
+            });
+        } else {
+            // Crear libro
+            response = await fetch(`${urlApi}/Libro`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(libro),
+                
+            });
+            console.log(libro)
+        }
+
+        if (!response.ok) {
+            // Log the response details to help debug
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
+            throw new Error("Error al guardar el libro");
+        }
+
+        const data = await response.json();
+        document.getElementById("mensaje").innerHTML = `
+            <div class="alert alert-success">Libro $ "editado" "creado" con éxito: ${data.nombre}</div>
+        `;
+        document.getElementById("LibroForm").reset();
+    } catch (error) {
+        console.error(error);
+        document.getElementById("mensaje").innerHTML = `
+            <div class="alert alert-danger">No se pudo guardar el Libro. Intente nuevamente.</div>
+        `;
+    }
+});
+
+
+// Función para cargar datos del libro en el formulario
+async function cargarLibro(id) {
+    try {
+        const response = await fetch(`${urlApi}/${id}`);
+        if (!response.ok) {
+            throw new Error("Error al obtener el Libro");
+        }
+        const libro = await response.json();
+
+        //document.getElementById("isbn").value = libro.isbn;
+        document.getElementById("titulo").value = libro.titulo;
+        document.getElementById("autor").value = libro.autor.nombre;
+        document.getElementById("fec_publi").value = libro.fec_Publi;
+        document.getElementById("genero").value = libro.genero.nombre;
+
+    } catch (error) {
+        console.error("Error al cargar libro:", error);
+        document.getElementById("mensaje").innerHTML = `
+            <div class="alert alert-danger">No se pudieron cargar los datos del libro. Intente nuevamente.</div>
+        `;
+    }
+  } 
+  window.onload = cargarOpciones;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
