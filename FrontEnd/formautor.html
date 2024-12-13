@@ -10,9 +10,14 @@
     />
   </head>
   <body>
-    <div>
-      <button onclick="window.location.href='list.html'">Listado</button>
-    </div>
+    <div class="container">
+      <div class="">
+          <button onclick="window.location.href='listGenero.html'">Listado Genero</button>
+          <button onclick="window.location.href='list.html'">Listado Autores</button>
+          <button onclick="window.location.href='formautor.html'">Form Autor</button>
+          <button onclick="window.location.href='formGenero.html'">Form Genero</button>
+      </div>
+  </div>
     <div class="container mt-5">
       <h1>Crear Autor</h1>
       <form id="autorForm">
@@ -107,7 +112,7 @@ async function cargarAutor(id) {
         const fecha = new Date(autor.fec_Nac).toISOString().split("T")[0];
 
         document.getElementById("nombre").value = autor.nombre;
-        document.getElementById("fecNac").value = autor.fecha;
+        document.getElementById("fecNac").value = fecha;
     } catch (error) {
         console.error("Error al cargar autor:", error);
         document.getElementById("mensaje").innerHTML = `
