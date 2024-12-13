@@ -1,0 +1,7 @@
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.csproj.AssemblyReference.cache
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.GeneratedMSBuildEditorConfig.editorconfig
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.AssemblyInfoInputs.cache
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.AssemblyInfo.cs
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.csproj.CoreCompileInputs.cache
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.MvcApplicationPartsAssemblyInfo.cs
+D:\nuevos datos\tup\2024\prog3\practicas\libraryejercicio\libraryejercicio\obj\Debug\net8.0\libraryejercicio.MvcApplicationPartsAssemblyInfo.cache
